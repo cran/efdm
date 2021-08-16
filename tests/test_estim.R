@@ -1,0 +1,40 @@
+library(efdm)
+statespace <- expand.grid(a=1:2, b=1:2, vol=1:5)
+pairdata <- data.frame(a=c(1,1,2,2), b=c(1,2,1,2), vol0=c(1,1,1,1), vol1=c(2,3,4,5))
+state0 <- statespace
+actprob <- statespace
+actprob$test <- 1
+state0$area <- 0
+state0$area[1] <- 1
+
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, statespace, by=c("a", "b"))
+act1 <- estimatetransprobs(act, pairdata, "nochange")
+transprobs(act1)
+runEFDM(state0, actprob, list(act1), 1)
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, statespace, factors="a", by="b")
+act2 <- estimatetransprobs(act, pairdata, "nochange")
+transprobs(act2)
+runEFDM(state0, actprob, list(act2), 1)
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, statespace, factors="b", by="a")
+act3 <- estimatetransprobs(act, pairdata, "nochange")
+transprobs(act3)
+runEFDM(state0, actprob, list(act3), 1)
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, statespace, factors=c("a", "b"))
+act4 <- estimatetransprobs(act, pairdata, "nochange")
+transprobs(act4)
+runEFDM(state0, actprob, list(act4), 1)
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, statespace, factors=c("b", "a"))
+act5 <- estimatetransprobs(act, pairdata, "nochange")
+transprobs(act5)
+runEFDM(state0, actprob, list(act5), 1)
+
+act <- define_activity("test", c("vol"))
+act <- build_statespace(act, data.frame(vol=1:5))
+act6 <- estimatetransprobs(act, pairdata[c("vol0", "vol1")], "nochange")
+transprobs(act6)
+runEFDM(state0, actprob, list(act6), 1)
