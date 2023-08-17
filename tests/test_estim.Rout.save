@@ -1,5 +1,6 @@
 
 
+> data.table::setDTthreads(1)
 > library(efdm)
 > statespace <- expand.grid(a=1:2, b=1:2, vol=1:5)
 > pairdata <- data.frame(a=c(1,1,2,2), b=c(1,2,1,2), vol0=c(1,1,1,1), vol1=c(2,3,4,5))
@@ -236,4 +237,39 @@
 4   3 1 1  0.2     test    1
 5   4 1 1  0.2     test    1
 6   5 1 1  0.2     test    1
+>
+> try(estimatetransprobs("vol", pairdata[c("vol0", "vol1")], data.frame(vol=1:4), prior="nochange"))
+[1] "Pairdata has transitions resulting in states that are not in statespace."
+  vol1 vol0 check_missing_combinations
+4    5    1                         NA
+Error in estimatetransprobs("vol", pairdata[c("vol0", "vol1")], data.frame(vol = 1:4),  :
+  Pairdata has transitions resulting in states that are not in statespace.
+>
+> try(estimatetransprobs("Vol", pairdata[c("vol0", "vol1")], data.frame(vol=1:4), prior="nochange"))
+Error in build_complex_statespace(act, statespace0, statespace1, factors,  :
+  Variables 'vol' in statespace not used by activity.
+>
+> try(estimatetransprobs("Vol", pairdata[c("vol0", "vol1")], data.frame(Vol=1:4), prior="nochange"))
+Error in estimatetransprobs("Vol", pairdata[c("vol0", "vol1")], data.frame(Vol = 1:4),  :
+  Variable(s) 'c("Vol0", "Vol1")' not present in pairdata.
+>
+>
+> ## TODO: add the above tests for these too
+>
+> statespace <- expand.grid(a=c("pine", "spruce"), b=1:2, vol=1:5)
+> pairdata <- data.frame(a=c("pine", "pine", "spruce", "spruce"), b=c(1,2,1,2), vol0=c(1,1,1,1), vol1=c(2,3,4,5))
+> state0 <- statespace
+> actprob <- statespace
+> actprob$test <- 1
+> state0$area <- 0
+> state0$area[1] <- 1
+>
+>
+> statespace <- expand.grid(a=as.factor(c("pine", "spruce")), b=1:2, vol=1:5)
+> pairdata <- data.frame(a=as.factor(c("pine", "pine", "spruce", "spruce")), b=c(1,2,1,2), vol0=c(1,1,1,1), vol1=c(2,3,4,5))
+> state0 <- statespace
+> actprob <- statespace
+> actprob$test <- 1
+> state0$area <- 0
+> state0$area[1] <- 1
 >

@@ -4,6 +4,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 options(max.print=50)
+data.table::setDTthreads(1)
 
 ## -----------------------------------------------------------------------------
 library(efdm)

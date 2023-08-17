@@ -1,7 +1,7 @@
 Package: efdm
 Title: Simulate Forest Resources with the European Forestry Dynamics
         Model
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
     person("Mikko", "Kuronen", email="mikko.kuronen@luke.fi", role=c("aut", "cre"),
            comment = c(ORCID = "0000-0002-8089-7895")),
@@ -21,13 +21,13 @@ Encoding: UTF-8
 LazyData: true
 Imports: stats, utils, data.table
 Suggests: dplyr, ggplot2, gridExtra, knitr, rmarkdown, sf, testthat
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Depends: R (>= 2.10)
 NeedsCompilation: no
-Packaged: 2021-12-22 17:53:27 UTC; 03052156
+Packaged: 2023-08-15 11:15:17 UTC; 03052156
 Author: Mikko Kuronen [aut, cre] (<https://orcid.org/0000-0002-8089-7895>),
   Minna Räty [aut] (<https://orcid.org/0000-0001-9898-8712>)
 Maintainer: Mikko Kuronen <mikko.kuronen@luke.fi>
 Repository: CRAN
-Date/Publication: 2022-01-10 10:02:46 UTC
+Date/Publication: 2023-08-17 08:52:33 UTC
