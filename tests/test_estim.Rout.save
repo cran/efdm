@@ -83,7 +83,7 @@
 4 1 1   4 0.25     test    1
 > act3 <- define_activity("test", c("vol"))
 > transprobs(act3) <- estimatetransprobs("vol", pairdata, statespace, factors="b", by="a", prior="nochange")
-> transprobs(act3)
+> transprobs(act3) |> dplyr::arrange(a, vol0, b, vol1)
    vol0 b a vol1 prob
 1     1 1 1    1 0.25
 2     1 1 1    2 0.50
@@ -100,11 +100,11 @@
 13    5 1 1    5 1.00
 14    5 2 1    5 1.00
 15    1 1 2    1 0.25
-16    1 1 2    5 0.25
-17    1 1 2    4 0.50
+16    1 1 2    4 0.50
+17    1 1 2    5 0.25
 18    1 2 2    1 0.25
-19    1 2 2    5 0.50
-20    1 2 2    4 0.25
+19    1 2 2    4 0.25
+20    1 2 2    5 0.50
 21    2 1 2    2 1.00
 22    2 2 2    2 1.00
 23    3 1 2    3 1.00
@@ -121,7 +121,7 @@
 4 1 1   3 0.25     test    1
 > act4 <- define_activity("test", c("vol"))
 > transprobs(act4) <- estimatetransprobs("vol", pairdata, statespace, factors=c("a", "b"), prior="nochange")
-> transprobs(act4)
+> transprobs(act4) |> dplyr::arrange(vol0, a, b, vol1)
    vol0 a b vol1  prob
 1     1 1 1    1 0.125
 2     1 1 1    2 0.375
@@ -169,7 +169,7 @@
 6 1 1   5 0.125     test    1
 > act5 <- define_activity("test", c("vol"))
 > transprobs(act5) <- estimatetransprobs("vol", pairdata, statespace, factors=c("b", "a"), prior="nochange")
-> transprobs(act5)
+> transprobs(act5) |> dplyr::arrange(vol0, b, a, vol1)
    vol0 b a vol1  prob
 1     1 1 1    1 0.125
 2     1 1 1    2 0.375

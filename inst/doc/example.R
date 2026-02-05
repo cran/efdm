@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -124,7 +124,7 @@ transprobs_ff_age_species <- statespace %>%
   select(vol0=vol, age0=age, sp0=sp, region) %>%
   unique %>%
   group_by(region, sp0, vol0, age0) %>%
-  summarize(data.frame(vol1=1, age1=1, sp1=c('other','spruce'),
+  reframe(data.frame(vol1=1, age1=1, sp1=c('other','spruce'),
                        prob=case_when(
                          sp0=='other' && region=='South' ~ c(1, 0),
                          sp0=='other' && region=='Middle' ~ c(1, 0),
@@ -144,7 +144,7 @@ states2 <- runEFDM(state0, actprob, activities2, 20)
 # Compute proportion of spruces in each time and region
 prop_spruces <- states2 %>%
   group_by(region, time) %>%
-  summarise(proportion = 100*sum((sp=="spruce")*area)/sum(area)) %>%
+  summarise(.groups="drop", proportion = 100*sum((sp=="spruce")*area)/sum(area)) %>%
   filter(time %in% c(0, 10, 20)) %>%
   mutate(time = 2016 + 5*time)
 
@@ -230,7 +230,7 @@ states3 <- runEFDM(state03, actprob3, activities3, 20)
 #pie charts of land use areas
 LUareas <- states3 %>%
   group_by(time, landuse) %>%
-  summarise(area = sum(area)) %>%
+  summarise(.groups="drop", area = sum(area)) %>%
   ungroup()
 LUareas <- LUareas %>%
   mutate(time = factor(time, labels = seq(2016,2116,5)))
