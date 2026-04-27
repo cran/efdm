@@ -137,7 +137,8 @@ estimatetransprobs <- function(dynamicvariables, pairdata,
     bydata <- NULL
     priorpart <- prior
     if(!is.null(pairdata)) {
-      mergeby <- c(factors, by) # Why not just 'by' here?
+      #mergeby <- c(factors, by) # Why not just 'by' here?
+      mergeby <- by
       if(length(mergeby)) {
         select <- unique(statespacepart$statespace0[mergeby])
         bydata <- as.data.frame(merge(as.data.table(pairdata), as.data.table(select), all=FALSE, by=mergeby))

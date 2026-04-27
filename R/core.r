@@ -155,11 +155,12 @@ check_activities <- function(acts, actprob, actnames, actfactors) {
 #' @param activities \code{list} A list of activities
 #' @param n \code{integer} Number of time steps required
 #' @param check Check input arguments for consistency.
+#' @param format ??
 #' @return \code{data.frame} State of each time step divided by activities
 #' @importFrom stats aggregate
 #' @importFrom utils head
 #' @export
-runEFDM <- function(state0, actprob, activities, n, check=TRUE) {
+runEFDM <- function(state0, actprob, activities, n, check=TRUE, format=1) {
   totalarea <- sum(state0$area)
   state <- state0
   # state may include for example plot id which should not be anywhere else
@@ -177,7 +178,7 @@ runEFDM <- function(state0, actprob, activities, n, check=TRUE) {
   # Later checks should not be needed, but they are cheap and might be useful if check==FALSE
 
   beforeactivity <- NULL
-  for(i in 0:n) {
+  for(i in 0:ifelse(format==1, n, n-1)) {
     m <- as.data.frame(merge(as.data.table(state), as.data.table(actprob), by=actfactors, all.x=TRUE, all.y=FALSE, allow.cartesian=TRUE))
 
     if(any(is.na(m[actnames]))) {
@@ -238,5 +239,9 @@ runEFDM <- function(state0, actprob, activities, n, check=TRUE) {
     if(!isTRUE(all.equal(totalarea, newtotalarea)))
       warning(paste("Starting with", totalarea, "area ended up with", newtotalarea, " area."))
   }
-  do.call(rbind, beforeactivity)
+  beforeactivity <- do.call(rbind, beforeactivity)
+  if(format == 2) {
+    return(list(beforeactivity=beforeactivity, stateend=state))
+  }
+  beforeactivity
 }

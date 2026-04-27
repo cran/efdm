@@ -4,7 +4,7 @@
 \alias{runEFDM}
 \title{Run European Forestry Dynamics Model}
 \usage{
-runEFDM(state0, actprob, activities, n, check = TRUE)
+runEFDM(state0, actprob, activities, n, check = TRUE, format = 1)
 }
 \arguments{
 \item{state0}{\code{data.frame} Initial state}
@@ -16,6 +16,8 @@ runEFDM(state0, actprob, activities, n, check = TRUE)
 \item{n}{\code{integer} Number of time steps required}
 
 \item{check}{Check input arguments for consistency.}
+
+\item{format}{??}
 }
 \value{
 \code{data.frame} State of each time step divided by activities

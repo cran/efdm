@@ -1,5 +1,10 @@
 library(efdm)
 library(testthat)
+orderresult <- function(res) {
+  res <- res[do.call(order, res[c("time", "a", "b", "vol", "activity")]),c("time", "a", "b", "vol", "activity", "area")]
+  row.names(res) <- NULL
+  res
+}
 
 statespace <- expand.grid(a=1:2, b=1:2, vol=1:5)
 state0 <- statespace
@@ -18,5 +23,4 @@ act2 <- define_activity("test2", "vol")
 transprobs(act2) <- data.frame(vol0=1:5, vol1=c(2:5,5), prob=1)
 actprob$test <- 0.1
 actprob$test2 <- 0.9
-expect_known_hash(runEFDM(state0, actprob, list(act1, act2), 5), "1b23f7f782")
-
+orderresult(runEFDM(state0, actprob, list(act1, act2), 5))
